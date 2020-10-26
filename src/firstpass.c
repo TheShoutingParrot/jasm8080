@@ -26,7 +26,7 @@ uint8_t	recognizePseudoInstruction(char *str) {
 }
 
 uint8_t recognizeRegister(char *str) {
-	if(!(strlen(str) <= 3))
+	if(!(strnlen(str, 4) <= 3))
 		return rTotal;
 
 	switch(toupper(*str)) {
@@ -383,8 +383,8 @@ void convertTokenToSymbolListEntry(
 			break;
 
 		case typeDefinedByte:
-			if((*token == '\'' && *(token+strlen(token)-1) == '\'') || (*token == '\"' && *(token+strlen(token)-1) == '\"')) {
-				for(tempWord = 1; tempWord < strlen(token) - 1; tempWord++) {
+			if((*token == '\'' && *(token+strnlen(token, 100)-1) == '\'') || (*token == '\"' && *(token+strnlen(token, 100)-1) == '\"')) {
+				for(tempWord = 1; tempWord < strnlen(token, 100) - 1; tempWord++) {
 					symbol.immediateByte = *(token+tempWord);
 
 					addToSymbolList((*location)++, typeDefinedByte, symbol, listHead);
@@ -511,12 +511,12 @@ void firstPass(FILE *sourceFile, struct symbolList **listHead, struct labelList 
 		token = strtok(line, separators);
 
 		while(token != NULL) {
-			if(*(token + strlen(token) - 1) == ':') {
+			if(*(token + strnlen(token, 100) - 1) == ':') {
 				char *labelStr;
-				labelStr = (char *)malloc(strlen(token));
+				labelStr = (char *)malloc(strnlen(token, 100));
 
 				strcpy(labelStr, token);
-				*(labelStr + strlen(labelStr) - 1) = '\0';
+				*(labelStr + strnlen(labelStr, 100) - 1) = '\0';
 
 				addToLabelList(location, labelStr, labelListHead);
 
@@ -539,7 +539,7 @@ void firstPass(FILE *sourceFile, struct symbolList **listHead, struct labelList 
 
 			prevToken = token;
 			
-			tempStr = (line + (token - line + strlen(token) + 1));
+			tempStr = (line + (token - line + strnlen(token, 100) + 1));
 			tempStr += strspn(tempStr, separators);
 
 			if(*(tempStr) == '\0')

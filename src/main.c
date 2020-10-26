@@ -121,10 +121,10 @@ uint16_t convertStrToWord(char *str, bool *number) {
 	if(number != NULL)
 		*number = true;
 
-	if(tolower(*(str + strlen(str) - 1)) == 'h') {
+	if(tolower(*(str + strnlen(str, 100) - 1)) == 'h') {
 		uint16_t temp;
 
-		for(i = 0; i < strlen(str) - 1; i++) {
+		for(i = 0; i < strnlen(str, 100) - 1; i++) {
 			if(!isxdigit(*(str+i))) {
 				if(number != NULL)
 					*number = false;
@@ -141,7 +141,7 @@ uint16_t convertStrToWord(char *str, bool *number) {
 	}
 
 	else {
-		for(i = 0; i < strlen(str); i++) {
+		for(i = 0; i < strnlen(str, 100); i++) {
 			if(!isdigit(*(str+i))) {
 				if(number != NULL)
 					*number = false;

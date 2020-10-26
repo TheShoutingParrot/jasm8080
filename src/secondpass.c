@@ -1081,8 +1081,7 @@ uint8_t symbolsToOpcode(struct symbolList *listHead, uint8_t *opcode, size_t *in
 }
 
 void secondPass(FILE *objectFile, struct symbolList *listHead) {
-	uint8_t *opcode;
-	uint8_t length, j;
+	uint8_t *opcode, j;
 	size_t i;
 
 	info(__FILE__, __LINE__, "starting secondpass...");
@@ -1090,7 +1089,7 @@ void secondPass(FILE *objectFile, struct symbolList *listHead) {
 	opcode = (uint8_t *)malloc(3 * sizeof(*opcode));
 
 	for(i = 0; i < sizeOfSymbolList;) {
-		length = symbolsToOpcode(listHead, opcode, &i);
+		uint8_t length = symbolsToOpcode(listHead, opcode, &i);
 
 		for(j = 0; j < length; j++) {
 			fwrite((opcode+j), sizeof(*opcode), 1, objectFile);

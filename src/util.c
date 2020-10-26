@@ -5,7 +5,7 @@ void die(const char *filename, const size_t line, const char *fmt, ...) {
 
         va_start(vargs, fmt);
 
-        fprintf(stderr, ANSI_COLOR_RED "FATAL ERROR %s:%04ld: " ANSI_COLOR_RESET , filename, line);
+        fprintf(stderr, ANSI_COLOR_RED "FATAL ERROR %s:%04zu: " ANSI_COLOR_RESET , filename, line);
         vfprintf(stderr, fmt, vargs);
 
         fputc('\n', stderr);
@@ -20,7 +20,7 @@ void info(const char *filename, const size_t line, const char *fmt, ...) {
 
         va_start(vargs, fmt);
 
-        fprintf(stdout, "INFO %s:%04ld: ", filename, line);
+        fprintf(stdout, "INFO %s:%04zu: ", filename, line);
         vfprintf(stdout, fmt, vargs);
 
         fputc('\n', stdout);

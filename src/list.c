@@ -76,7 +76,7 @@ void printLabelList(struct labelList *listHead) {
 	puts("printing label list...");
 
         for(i = 0; i < sizeOfLabelList; i++) {
-                printf("labels list %ld %p: %X %p %s\n", i, (listHead+i), (listHead+i)->location, (listHead+i)->label, (listHead+i)->label);
+                printf("labels list %zu %p: %X %p %s\n", i, (listHead+i), (listHead+i)->location, (listHead+i)->label, (listHead+i)->label);
         }
 }
 

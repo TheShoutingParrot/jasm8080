@@ -5,6 +5,7 @@
 #include <stdint.h>
 #include <stdbool.h>
 #include <string.h>
+#include <unistd.h>
 #include <ctype.h>
 #include <stdarg.h>
 
@@ -171,6 +172,7 @@ void secondPass(FILE *objectFile, struct symbolList *listHead);
 
 void die(const char *filename, const size_t line, const char *fmt, ...);
 void info(const char *filename, const size_t line, const char *fmt, ...);
+bool prompt(const char *prompText, ...);
 
 #define	_JASM8080_H
 #endif /* #ifndef _JASM8080_H */

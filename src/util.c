@@ -20,10 +20,40 @@ void info(const char *filename, const size_t line, const char *fmt, ...) {
 
         va_start(vargs, fmt);
 
-        fprintf(stdout, "INFO %s:%04zu: ", filename, line);
-        vfprintf(stdout, fmt, vargs);
+        printf("INFO %s:%04zu: ", filename, line);
+        vprintf(fmt, vargs);
 
-        fputc('\n', stdout);
+        putchar('\n');
 
         va_end(vargs);
+}
+
+bool prompt(const char *promptText, ...) {
+        va_list vargs;
+	char input;
+
+        va_start(vargs, promptText);
+
+        vprintf(promptText, vargs);
+
+        va_end(vargs);
+
+	printf(" [Y/n] ");
+
+	input = fgetc(stdin);
+
+	
+	if(input == '\n')
+		return true;
+
+	/* clear stdin */
+	char ch;
+	while((ch = fgetc(stdin)) != '\n')
+		if(ch == EOF)
+			break;
+
+	if(tolower(input) == 'y')
+		return true;
+
+	return false;
 }

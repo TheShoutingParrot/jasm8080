@@ -76,8 +76,22 @@ int main(int argv, char *argc[]) {
 
 	if(*sourceFilename == '\0')
 		die(__FILE__, __LINE__, "no source filename given");
-	if(*objectFilename == '\0')
-		die(__FILE__, __LINE__, "no object filename given");
+	if(*objectFilename == '\0') {
+		for(i = 0; i < strcspn(sourceFilename, "."); i++) {
+			*(objectFilename+i) = *(sourceFilename+i);
+		}
+
+		*(objectFilename+i) = '\0';
+
+		strcat(objectFilename, ".com");
+
+		if(access(objectFilename, F_OK) != -1) {
+			if(!prompt("Do you wish to overwrite the file \"%s\"?", objectFilename))
+				return EXIT_SUCCESS;
+		}
+
+		info(__FILE__, __LINE__, "assembling source to file \"%s\"", objectFilename);
+	}
 
 	sourceFile = fopen(sourceFilename, "r");
 	objectFile = fopen(objectFilename, "wb");
